@@ -260,10 +260,14 @@ export default function Home() {
                         className="w-8 md:w-16 dark:text-red-500"
                         onClick={handleRemove}
                       >
-                        <Trash2 className="" />
+                        <div>
+                          <Trash2 className="w-6 h-6" />
+                        </div>
                       </Button>
                       <Button className="w-8 md:w-16" onClick={checkGuess}>
-                        <Check className="w-4 h-4 " />
+                        <div>
+                          <Check className="w-6 h-6" />
+                        </div>
                       </Button>
                     </div>
                   </CardContent>

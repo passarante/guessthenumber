@@ -7,8 +7,8 @@ import React from "react";
 
 const WelcomePage = () => {
   return (
-    <div className="h-[calc(100vh_-_160px)]  w-full relative">
-      <div className="md:w-1/2 absolute md:top-1/2 md:left-1/2 md:-translate-x-1/2 md:-translate-y-1/2 inset-4  overflow-y-auto">
+    <div className="h-[calc(100vh_-_160px)]  w-full relative ">
+      <div className="md:w-1/2 md:absolute md:top-1/2 md:left-1/2  md:-translate-x-1/2 md:-translate-y-1/2  sm:overflow-y-auto">
         <CardContainer className="inter-var bg-black md:w-[800px] md:h-[600px] rounded-xl w-[400px]">
           <CardBody className="bg-white/10 text-white relative group/card  dark:hover:shadow-2xl dark:hover:shadow-emerald-500/[0.1] dark:bg-black dark:border-white/[0.2] border-black/[0.1] w-auto min-w-[400px] md:min-w-[700px] sm:w-[30rem] h-auto rounded-xl p-6 border  ">
             <CardItem
@@ -32,8 +32,8 @@ const WelcomePage = () => {
             </CardItem>
             <CardItem translateZ="100" className="w-full mt-4">
               <div>
-                <h4 className="text-xl font-bold">Nasıl Oynanır:</h4>
-                <ul className="text-sm">
+                <h4 className="text-lg md:text-xl font-bold">Nasıl Oynanır:</h4>
+                <ul className="text-xs md:text-sm">
                   <li>
                     * Rakamları birbirinden farklı 4 haneli bir sayıyı tahmin
                     etmelisiniz.

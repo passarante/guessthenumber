@@ -22,7 +22,7 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <head />
       <body
-        className={`${poppins.className} min-h-screen flex justify-between flex-col`}
+        className={`${poppins.className} min-h-screen flex justify-between flex-col bg-gray-300 bg-[url('/assets/images/bg.jpg')] bg-cover`}
       >
         <ThemeProvider
           attribute="class"

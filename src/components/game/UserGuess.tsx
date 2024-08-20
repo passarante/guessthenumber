@@ -41,28 +41,28 @@ const UserGuess = ({ number, guess, setIsWin }: UserGuessProps) => {
   };
 
   return (
-    <div className="flex items-center justify-between">
-      <div className="flex items-center space-x-4">
+    <div className="flex items-center justify-between gap-4">
+      <div className="flex items-center md:space-x-4 space-x-2">
         {number
           .toString()
           .split("")
           .map((num, index) => (
             <span
-              className="bg-slate-200 text-xl text-blue-600 p-2 px-4 border-border-gray-300 rounded-md"
+              className="bg-slate-200 min-w-6 text-sm md:text-base text-center   text-blue-600 p-1 px-2 md:p-2 md:px-4 border-border-gray-300 rounded-md"
               key={index}
             >
               {num}
             </span>
           ))}
       </div>
-      <div className="flex items-center space-x-2">
+      <div className="ml-4 flex items-center space-x-2">
         {correctPlaces > 0 && (
-          <span className="bg-green-500 border-lime-200 border p-2 px-4 rounded-md">
+          <span className="bg-green-500 min-w-6 text-sm md:text-base text-center border-lime-200 border p-1 px-1 md:p-2 md:px-4 rounded-md">
             {correctPlaces}
           </span>
         )}
         {correctNumbers > 0 && (
-          <span className="bg-red-300 border-pink-200 border p-2 px-4 rounded-md">
+          <span className="bg-red-300 min-w-6 text-sm md:text-base text-center border-pink-200 border p-1 px-1 md:p-2 md:px-4 rounded-md">
             {correctNumbers}
           </span>
         )}

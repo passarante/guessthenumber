@@ -1,7 +1,15 @@
 "use client";
 import UserGuess from "@/components/game/UserGuess";
+import { AuroraBackground } from "@/components/global/aurora-background";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { toast } from "@/components/ui/use-toast";
 import { Check, Trash2 } from "lucide-react";
 import { useEffect, useState } from "react";
@@ -117,96 +125,177 @@ export default function Home() {
   };
 
   return (
-    <div className="max-w-5xl mx-auto bg-gradient-to-b from-blue-100 via-pink-100 to-indigo-900 h-full flex flex-1 p-4 my-4 rounded-lg">
-      <div className="grid grid-cols-3 gap-4">
-        <div className="col-span-2 mt-4">
-          {userGuess.length > 0 && (
-            <Card className="w-[500px]">
-              <CardContent>
-                <div className="p-2 flex flex-col gap-4">
-                  {/* <div>{guess}</div> */}
-                  {/* Guess Line */}
+    <div className="z-10 max-w-5xl mx-auto h-full flex flex-1 p-4 my-2 rounded-lg">
+      <AuroraBackground className="p-4 rounded-xl h-[860px] shadow-xl">
+        <Card className="z-10">
+          <CardHeader>
+            <CardTitle>Sayı Bulmaca</CardTitle>
+            <CardDescription>Sayı tahmin oyunu</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="grid md:grid-cols-3 md:gap-4 z-10">
+              <div className="md:col-span-2 ">
+                {userGuess.length > 0 && (
+                  <Card className="md:w-[500px]">
+                    <CardContent>
+                      <div className="p-2 flex flex-col gap-4 max-h-40 md:max-h-[500px] overflow-y-scroll">
+                        {/* <div>{guess}</div> */}
+                        {/* Guess Line */}
 
-                  {userGuess.map((num, index) => (
-                    <UserGuess
-                      key={index}
-                      number={num}
-                      guess={guess}
-                      setIsWin={setIsWin}
-                    />
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
-          )}
-        </div>
+                        {userGuess.map((num, index) => (
+                          <UserGuess
+                            key={index}
+                            number={num}
+                            guess={guess}
+                            setIsWin={setIsWin}
+                          />
+                        ))}
+                      </div>
+                    </CardContent>
+                  </Card>
+                )}
+              </div>
 
-        <div>
-          <Card>
-            <CardHeader className="!flex !justify-center !w-full">
-              <div className="!flex !justify-center !w-full">
-                <div className="w-80 grid grid-cols-4 gap-4">
-                  <Button
-                    onClick={() => setNumberIndex(1)}
-                    variant={"outline"}
-                    className={`text-center border border-indigo-300 p-4 rounded-lg ${
-                      numberIndex === 1 ? "border-green-300" : ""
-                    }`}
-                  >
-                    {number1 ? number1 : "?"}
-                  </Button>
-                  <Button
-                    onClick={() => setNumberIndex(2)}
-                    variant={"outline"}
-                    className={`text-center border border-indigo-300 p-4 rounded-lg ${
-                      numberIndex === 2 ? "border-green-300" : ""
-                    }`}
-                  >
-                    {number2 ? number2 : "?"}
-                  </Button>
-                  <Button
-                    onClick={() => setNumberIndex(3)}
-                    variant={"outline"}
-                    className={`text-center border border-indigo-300 p-4 rounded-lg ${
-                      numberIndex === 3 ? "border-green-300" : ""
-                    }`}
-                  >
-                    {number3 ? number3 : "?"}
-                  </Button>
-                  <Button
-                    onClick={() => setNumberIndex(4)}
-                    variant={"outline"}
-                    className={`text-center border border-indigo-300 p-4 rounded-lg ${
-                      numberIndex === 4 ? "border-green-300" : ""
-                    }`}
-                  >
-                    {number4 ? number4 : "?"}
-                  </Button>
-                </div>
+              <div className="w-60 mx-auto md:w-full mt-4 md:mt-0">
+                <Card>
+                  <CardHeader className="flex justify-center w-full">
+                    <div className="flex justify-center w-full">
+                      <div className="md:w-80 w-60 grid grid-cols-4 gap-4 ">
+                        <Button
+                          onClick={() => setNumberIndex(1)}
+                          variant={"outline"}
+                          className={`text-center border border-indigo-300 md:p-4 p-2 rounded-lg ${
+                            numberIndex === 1 ? "border-green-300" : ""
+                          }`}
+                        >
+                          {number1 ? number1 : "?"}
+                        </Button>
+                        <Button
+                          onClick={() => setNumberIndex(2)}
+                          variant={"outline"}
+                          className={`text-center border border-indigo-300 md:p-4 p-2 rounded-lg ${
+                            numberIndex === 2 ? "border-green-300" : ""
+                          }`}
+                        >
+                          {number2 ? number2 : "?"}
+                        </Button>
+                        <Button
+                          onClick={() => setNumberIndex(3)}
+                          variant={"outline"}
+                          className={`text-center border border-indigo-300 md:p-4 p-2 rounded-lg ${
+                            numberIndex === 3 ? "border-green-300" : ""
+                          }`}
+                        >
+                          {number3 ? number3 : "?"}
+                        </Button>
+                        <Button
+                          onClick={() => setNumberIndex(4)}
+                          variant={"outline"}
+                          className={`text-center border border-indigo-300 md:p-4 p-2 rounded-lg ${
+                            numberIndex === 4 ? "border-green-300" : ""
+                          }`}
+                        >
+                          {number4 ? number4 : "?"}
+                        </Button>
+                      </div>
+                    </div>
+                  </CardHeader>
+                  <CardContent className="flex justify-center w-full items-center">
+                    <div className="w-80 grid grid-cols-3 md:gap-4 gap-2 place-items-center  ">
+                      <Button
+                        className="w-8 md:w-16"
+                        onClick={() => handleNumberPress(1)}
+                      >
+                        1
+                      </Button>
+                      <Button
+                        className="w-8 md:w-16"
+                        onClick={() => handleNumberPress(2)}
+                      >
+                        2
+                      </Button>
+                      <Button
+                        className="w-8 md:w-16"
+                        onClick={() => handleNumberPress(3)}
+                      >
+                        3
+                      </Button>
+                      <Button
+                        className="w-8 md:w-16"
+                        onClick={() => handleNumberPress(4)}
+                      >
+                        4
+                      </Button>
+                      <Button
+                        className="w-8 md:w-16"
+                        onClick={() => handleNumberPress(5)}
+                      >
+                        5
+                      </Button>
+                      <Button
+                        className="w-8 md:w-16"
+                        onClick={() => handleNumberPress(6)}
+                      >
+                        6
+                      </Button>
+                      <Button
+                        className="w-8 md:w-16"
+                        onClick={() => handleNumberPress(7)}
+                      >
+                        7
+                      </Button>
+                      <Button
+                        className="w-8 md:w-16"
+                        onClick={() => handleNumberPress(8)}
+                      >
+                        8
+                      </Button>
+                      <Button
+                        className="w-8 md:w-16"
+                        onClick={() => handleNumberPress(9)}
+                      >
+                        9
+                      </Button>
+                      <Button
+                        className="w-8 md:w-16 dark:text-red-500"
+                        onClick={handleRemove}
+                      >
+                        <Trash2 className="" />
+                      </Button>
+                      <Button className="w-8 md:w-16" onClick={checkGuess}>
+                        <Check className="w-4 h-4 " />
+                      </Button>
+                    </div>
+                  </CardContent>
+                </Card>
               </div>
-            </CardHeader>
-            <CardContent className="flex justify-center w-full">
-              <div className="w-80 grid grid-cols-3 gap-4">
-                <Button onClick={() => handleNumberPress(1)}>1</Button>
-                <Button onClick={() => handleNumberPress(2)}>2</Button>
-                <Button onClick={() => handleNumberPress(3)}>3</Button>
-                <Button onClick={() => handleNumberPress(4)}>4</Button>
-                <Button onClick={() => handleNumberPress(5)}>5</Button>
-                <Button onClick={() => handleNumberPress(6)}>6</Button>
-                <Button onClick={() => handleNumberPress(7)}>7</Button>
-                <Button onClick={() => handleNumberPress(8)}>8</Button>
-                <Button onClick={() => handleNumberPress(9)}>9</Button>
-                <Button onClick={handleRemove}>
-                  <Trash2 />
-                </Button>
-                <Button onClick={checkGuess}>
-                  <Check />
-                </Button>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
-      </div>
+            </div>
+          </CardContent>
+          <CardFooter>
+            <div>
+              <h4 className="text-xl font-bold">Nasıl Oynanır:</h4>
+              <ul className="text-sm">
+                <li>
+                  * Rakamları birbirinden farklı 4 haneli bir sayıyı tahmin
+                  etmelisiniz.
+                </li>
+                <li>
+                  * Yaptığınız tahminler solda görünecektir. Doğru sayıyı
+                  bulabilmeniz için size tahmininizle ilgili bilgi veriyoruz.
+                </li>
+                <li>
+                  * Tahmininizdeki yeri doğru olan rakamları yeşil kutuda
+                  gösteriyoruz.
+                </li>
+                <li>
+                  * Tahmininizdeki <b>doğru olan ancak yeri doğru olmayan</b>{" "}
+                  rakamları kırmızı kutuda gösteriyoruz.
+                </li>
+              </ul>
+            </div>
+          </CardFooter>
+        </Card>
+      </AuroraBackground>
     </div>
   );
 }

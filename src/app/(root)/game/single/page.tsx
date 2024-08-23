@@ -1,5 +1,7 @@
 "use client";
+
 import UserGuess from "@/components/game/UserGuess";
+
 import { AuroraBackground } from "@/components/global/aurora-background";
 import { Button } from "@/components/ui/button";
 import {
@@ -12,21 +14,38 @@ import {
 } from "@/components/ui/card";
 import { toast } from "@/components/ui/use-toast";
 import { Check, Trash2 } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import useKeypress from "react-use-keypress";
 
 const NUMBERS = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
 export default function Home() {
+  // const {
+  //   guess,
+  //   number1,
+  //   number2,
+  //   number3,
+  //   number4,
+  //   numberIndex,
+  //   setGuess,
+  //   setNumber1,
+  //   setNumber2,
+  //   setNumber3,
+  //   setNumber4,
+  //   setNumberIndex,
+  // } = useGameStore((state) => state);
+
   const [guess, setGuess] = useState<number>(0);
-  const [number1, setNumber1] = useState<number | null>();
-  const [number2, setNumber2] = useState<number | null>();
-  const [number3, setNumber3] = useState<number | null>();
-  const [number4, setNumber4] = useState<number | null>();
-  const [numberIndex, setNumberIndex] = useState(1);
+  const [number1, setNumber1] = useState<number | null | undefined>();
+  const [number2, setNumber2] = useState<number | null | undefined>();
+  const [number3, setNumber3] = useState<number | null | undefined>();
+  const [number4, setNumber4] = useState<number | null | undefined>();
+  const [numberIndex, setNumberIndex] = useState<number>(1);
   const [gameOver, setGameOver] = useState(false);
   const [isWin, setIsWin] = useState(false);
-
   const [userGuess, setUserGuess] = useState<number[]>([]);
+
+  const scrollRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     handleCreateRandomNumber();
@@ -56,6 +75,39 @@ export default function Home() {
       }
     };
   }, [isWin]);
+
+  useEffect(() => {
+    //3️⃣ bring the last item into view
+    scrollRef.current?.lastElementChild?.scrollIntoView({
+      behavior: "smooth",
+    });
+  }, [userGuess]);
+
+  useKeypress(
+    [
+      "1",
+      "2",
+      "3",
+      "4",
+      "5",
+      "6",
+      "7",
+      "8",
+      "9",
+      "Enter",
+      "Backspace",
+      "Delete",
+    ],
+    (event: KeyboardEvent) => {
+      if (event.key === "Enter") {
+        checkGuess();
+      } else if (event.key === "Backspace" || event.key === "Delete") {
+        handleRemove();
+      } else {
+        handleNumberPress(parseInt(event.key));
+      }
+    }
+  );
 
   const handleCreateRandomNumber = () => {
     let numStr = ``;
@@ -125,11 +177,11 @@ export default function Home() {
   };
 
   return (
-    <div className="z-10 max-w-5xl mx-auto h-full flex flex-1 p-4 my-2 rounded-lg">
+    <div className="z-10 max-w-5xl mx-auto h-full flex flex-1 p-4 my-2 rounded-lg ">
       <AuroraBackground className="p-4 rounded-xl h-[860px] shadow-xl">
         <Card className="z-10">
           <CardHeader>
-            <CardTitle>Sayı Bulmaca</CardTitle>
+            <CardTitle>Sayı Bulmaca </CardTitle>
             <CardDescription>Sayı tahmin oyunu</CardDescription>
           </CardHeader>
           <CardContent>
@@ -138,7 +190,10 @@ export default function Home() {
                 {userGuess.length > 0 && (
                   <Card className="md:w-[500px]">
                     <CardContent>
-                      <div className="p-2 flex flex-col gap-4 max-h-40 md:max-h-[500px] overflow-y-scroll">
+                      <div
+                        className="p-2 flex flex-col gap-4 max-h-40 md:max-h-[300px] scrollbar-thumb-rounded-full  scrollbar-track-rounded-full scrollbar scrollbar-thumb-sky-200 scrollbar-track-slate-50 overflow-y-scroll"
+                        ref={scrollRef}
+                      >
                         {/* <div>{guess}</div> */}
                         {/* Guess Line */}
 
@@ -146,7 +201,8 @@ export default function Home() {
                           <UserGuess
                             key={index}
                             number={num}
-                            guess={guess}
+                            guess={guess!}
+                            isLast={index === userGuess.length - 1}
                             setIsWin={setIsWin}
                           />
                         ))}

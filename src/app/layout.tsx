@@ -19,10 +19,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html
+      lang="en"
+      suppressHydrationWarning
+      className="scrollbar-thumb-rounded-full  scrollbar-track-rounded-full scrollbar scrollbar-thumb-sky-800 scrollbar-track-black overflow-y-auto"
+    >
       <head />
       <body
-        className={`${poppins.className} min-h-screen flex justify-between flex-col bg-gray-300 bg-[url('/assets/images/bg.jpg')] bg-cover`}
+        className={`${poppins.className} min-h-screen flex justify-between flex-col bg-gray-300 bg-[url('/assets/images/bg.jpg')] bg-cover `}
       >
         <ThemeProvider
           attribute="class"
@@ -30,9 +34,13 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <Navbar />
-          <main className="flex flex-col flex-1">{children}</main>
-          <Footer />
+          <div className="scrollbar scrollbar-thumb-sky-700 scrollbar-track-sky-300 overflow-y-auto">
+            <Navbar />
+            <main className="flex flex-col flex-1 scrollbar scrollbar-thumb-sky-700 scrollbar-track-sky-300 overflow-y-auto">
+              {children}
+            </main>
+            <Footer />
+          </div>
           <Toaster />
         </ThemeProvider>
       </body>

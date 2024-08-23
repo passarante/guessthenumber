@@ -4,9 +4,10 @@ type UserGuessProps = {
   number: number;
   guess: number;
   setIsWin: Dispatch<SetStateAction<boolean>>;
+  isLast: boolean;
 };
 
-const UserGuess = ({ number, guess, setIsWin }: UserGuessProps) => {
+const UserGuess = ({ number, guess, setIsWin, isLast }: UserGuessProps) => {
   const [correctNumbers, setCorrectNumbers] = useState<number>(0);
   const [correctPlaces, setCorrectPlaces] = useState<number>(0);
 
@@ -41,8 +42,14 @@ const UserGuess = ({ number, guess, setIsWin }: UserGuessProps) => {
   };
 
   return (
-    <div className="flex items-center justify-between gap-4">
-      <div className="flex items-center md:space-x-4 space-x-2">
+    <div className="flex items-center justify-between gap-4 ">
+      <div
+        className={`flex items-center md:space-x-4 space-x-2 px-2 py-1 ${
+          isLast
+            ? "border border-red-500  rounded-lg animate-pulse"
+            : "opacity-50"
+        } `}
+      >
         {number
           .toString()
           .split("")

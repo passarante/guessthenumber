@@ -16,6 +16,9 @@ import { toast } from "@/components/ui/use-toast";
 import { Check, Trash2 } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import useKeypress from "react-use-keypress";
+import useUserStore from "../../../../../store/user-store";
+import { addGamePlay, createNewGame, Game } from "@/actions/game-actions";
+import { useRouter } from "next/navigation";
 
 const NUMBERS = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
@@ -45,11 +48,13 @@ export default function Home() {
   const [isWin, setIsWin] = useState(false);
   const [userGuess, setUserGuess] = useState<number[]>([]);
 
-  const scrollRef = useRef<HTMLDivElement>(null);
+  const [game, setGame] = useState<Game | null>();
 
-  useEffect(() => {
-    handleCreateRandomNumber();
-  }, []);
+  const { user } = useUserStore();
+
+  const router = useRouter();
+
+  const scrollRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     let timeOut = null;
@@ -59,7 +64,7 @@ export default function Home() {
           title: "Efferim... Doğru rakam " + guess + " idi...",
         });
         setUserGuess([]);
-        handleCreateRandomNumber();
+
         setNumber1(null);
         setNumber2(null);
         setNumber3(null);
@@ -109,7 +114,7 @@ export default function Home() {
     }
   );
 
-  const handleCreateRandomNumber = () => {
+  const startNewGame = () => {
     let numStr = ``;
     let tempNumbers = NUMBERS;
 
@@ -120,7 +125,26 @@ export default function Home() {
       numStr += element;
     }
 
-    setGuess(parseInt(numStr));
+    const guessNr = parseInt(numStr);
+    setGuess(guessNr);
+
+    if (user) {
+      createNewGame({
+        type: "single",
+        user1: user,
+        guessNumber: guessNr,
+        isEnded: false,
+      })
+        .then((res) => {
+          if (res && res?.success && res.data) {
+            setGame(res.data[0]);
+            router.push(`/game/single/${res.data[0].id}`);
+          }
+        })
+        .catch((err) => {
+          console.log("Err", err);
+        });
+    }
   };
 
   const handleNumberPress = (pressedNumber: number) => {
@@ -171,6 +195,23 @@ export default function Home() {
         ...userGuess,
         parseInt(`${number1}${number2}${number3}${number4}`),
       ]);
+      console.log(user, game);
+      if (user && game) {
+        console.log("method");
+        addGamePlay({
+          user_id: user.id,
+          game_id: game.id!,
+          guess: parseInt(`${number1}${number2}${number3}${number4}`),
+          correct_numbers: 0,
+          correct_places: 0,
+        })
+          .then((res) => {
+            console.log("RES", res);
+          })
+          .catch((err) => {
+            console.log("Err", err);
+          });
+      }
     } else {
       return;
     }
@@ -180,9 +221,15 @@ export default function Home() {
     <div className="z-10 max-w-5xl mx-auto h-full flex flex-1 p-4 my-2 rounded-lg ">
       <AuroraBackground className="p-4 rounded-xl h-[860px] shadow-xl">
         <Card className="z-10">
-          <CardHeader>
-            <CardTitle>Sayı Bulmaca </CardTitle>
-            <CardDescription>Sayı tahmin oyunu</CardDescription>
+          <CardHeader className="flex justify-between flex-row items-center">
+            <div>
+              <CardTitle>Sayı Bulmaca </CardTitle>
+              <CardDescription>Sayı tahmin oyunu</CardDescription>
+            </div>
+
+            <Button onClick={startNewGame} variant={"outline"}>
+              Oyunu Başlat
+            </Button>
           </CardHeader>
           <CardContent>
             <div className="grid md:grid-cols-3 md:gap-4 z-10">

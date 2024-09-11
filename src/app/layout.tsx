@@ -39,7 +39,9 @@ export default function RootLayout({
             <main className="flex flex-col flex-1 scrollbar scrollbar-thumb-sky-700 scrollbar-track-sky-300 overflow-y-auto">
               {children}
             </main>
-            <Footer />
+            <div className="fixed bottom-0 w-full">
+              <Footer />
+            </div>
           </div>
           <Toaster />
         </ThemeProvider>

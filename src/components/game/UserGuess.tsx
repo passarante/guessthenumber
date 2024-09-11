@@ -3,11 +3,11 @@ import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 type UserGuessProps = {
   number: number;
   guess: number;
-  setIsWin: Dispatch<SetStateAction<boolean>>;
+
   isLast: boolean;
 };
 
-const UserGuess = ({ number, guess, setIsWin, isLast }: UserGuessProps) => {
+const UserGuess = ({ number, guess, isLast }: UserGuessProps) => {
   const [correctNumbers, setCorrectNumbers] = useState<number>(0);
   const [correctPlaces, setCorrectPlaces] = useState<number>(0);
 
@@ -31,10 +31,6 @@ const UserGuess = ({ number, guess, setIsWin, isLast }: UserGuessProps) => {
       if (numberStr[index] === guessStr[index]) {
         placeTotal++;
       }
-    }
-
-    if (placeTotal === 4) {
-      setIsWin(true);
     }
 
     setCorrectNumbers(correctTotal - placeTotal);
